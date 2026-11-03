@@ -48,11 +48,12 @@ public class ResultFragment extends Fragment {
         View v =  inflater.inflate(R.layout.result_view, container, false);
         
         mResultView = (TextView) v.findViewById(R.id.result);
-        if (mPendingDisp != null) {
-            mResultView.setText(mPendingDisp);
-        }
-
+        mLabelView = (TextView) v.findViewById(R.id.result_label);
         Button closeButton = (Button) v.findViewById(R.id.close_button);
+        mCloseButton = closeButton;
+        if (mPendingDisp != null) {
+            applyResult();
+        }
 
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,13 +96,26 @@ public class ResultFragment extends Fragment {
     
     
     private TextView mResultView;
+    private TextView mLabelView;
+    private Button mCloseButton;
     private String mPendingDisp;
+    private boolean mCorrect;
+    private boolean mIsLast;
 
-    public void setResultDisp(String disp) {
+    public void setResult(boolean correct, String disp, boolean isLast) {
         mPendingDisp = disp;
+        mCorrect = correct;
+        mIsLast = isLast;
         if (mResultView != null) {
-            mResultView.setText(disp);
+            applyResult();
         }
+    }
+
+    private void applyResult() {
+        mResultView.setText(mPendingDisp);
+        mLabelView.setText(mCorrect ? R.string.result_correct : R.string.result_wrong);
+        mLabelView.setTextColor(getResources().getColor(mCorrect ? R.color.correct : R.color.wrong, null));
+        mCloseButton.setText(mIsLast ? R.string.see_score : R.string.close_result);
     }
 
     @Override

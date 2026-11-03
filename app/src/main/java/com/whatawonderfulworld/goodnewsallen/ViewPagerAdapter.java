@@ -32,6 +32,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 	  ImageView view = new ImageView(activity);
 	  //view.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	  //view.setScaleType(ScaleType.FIT_XY);
+	  view.setScaleType(ScaleType.FIT_CENTER);
 	  view.setImageResource(images.get(position));
 	  collection.addView(view, 0);
 	  view.setId(position);

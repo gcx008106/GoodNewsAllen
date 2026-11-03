@@ -23,6 +23,8 @@ implements ResultFragment.OnResultClosedListener{
 	    Intent intent = getIntent();
 	    
 	    String	disp 	= intent.getStringExtra("resultDisp");
+	    boolean	correct	= intent.getBooleanExtra("correct", false);
+	    boolean	isLast	= intent.getBooleanExtra("isLast", false);
 	    //int	position	= intent.getIntExtra("position", 0);
 
 		
@@ -34,7 +36,7 @@ implements ResultFragment.OnResultClosedListener{
 	
         ResultFragment resFrag = (ResultFragment)
                 getSupportFragmentManager().findFragmentById(R.id.result_fragment);
-    	resFrag.setResultDisp(disp);
+    	resFrag.setResult(correct, disp, isLast);
         
         // Show the Up button in the action bar.
 		//setupActionBar();

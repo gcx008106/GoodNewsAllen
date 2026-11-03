@@ -10,9 +10,21 @@
     <string name="title_activity_statement">StatementActivity</string>
     <string name="start_text">start_text</string>
     <string name="nickname_sample">pete</string>
-    <string name="close_result">Next</string>
+    <string name="close_result">次の問題へ</string>
     <string name="close_score">おしまい</string>
-    <string name="title_activity_result">Result</string>
-    <string name="title_activity_score">Score</string>    
-    <string name="this_is_it">SOREDA!</string>
+    <string name="title_activity_result">結果</string>
+    <string name="title_activity_score">スコア</string>    
+    <string name="this_is_it">それだ！</string>
+
+    <string name="question_number">Q%1$d / %2$d</string>
+    <string name="page_indicator">%1$d / %2$d</string>
+    <string name="answer_hint">◀ ▶ で選んで「それだ！」、または写真をタップ</string>
+    <string name="prev_image">前の写真</string>
+    <string name="next_image">次の写真</string>
+    <string name="result_correct">正解！</string>
+    <string name="result_wrong">ざんねん…</string>
+    <string name="see_score">結果を見る</string>
+    <string name="score_title">結果発表</string>
+    <string name="score_points">%1$dて～ん！</string>
+    <string name="score_detail">%1$d問中 %2$d問正解</string>
 </resources>

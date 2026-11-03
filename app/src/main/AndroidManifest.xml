@@ -18,13 +18,11 @@
         <activity
             android:name=".ResultActivity"
             android:exported="false"
-            android:label="@string/title_activity_result"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/title_activity_result" />
         <activity
             android:name=".ScoreActivity"
             android:exported="false"
-            android:label="@string/title_activity_score"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/title_activity_score" />
     </application>
 
 </manifest>

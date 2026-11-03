@@ -28,7 +28,9 @@ import android.widget.TextView;
 public class QuestionFragment extends Fragment {
 
     private TextView mQuestionView;
+    private TextView mNumberView;
     private String mPendingStatement;
+    private String mPendingNumber;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -38,17 +40,21 @@ public class QuestionFragment extends Fragment {
         // AndroidX attaches <fragment> views to the Activity later and overwrites the root
         // view id with the <fragment> tag id, so keep a direct reference here.
         mQuestionView = (TextView) v.findViewById(R.id.question);
+        mNumberView = (TextView) v.findViewById(R.id.question_number);
         if (mPendingStatement != null) {
             mQuestionView.setText(mPendingStatement);
+            mNumberView.setText(mPendingNumber);
         }
         return v;
         
     }
  
-    public void setQuestionStatement(String qstat){
+    public void setQuestion(int number, int total, String qstat){
         mPendingStatement = qstat;
+        mPendingNumber = getString(R.string.question_number, number, total);
         if (mQuestionView != null) {
-            mQuestionView.setText(qstat);
+            mQuestionView.setText(mPendingStatement);
+            mNumberView.setText(mPendingNumber);
         }
     }
 }

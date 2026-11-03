@@ -19,6 +19,7 @@ implements ScoreFragment.OnScoreClosedListener{
 	    Intent intent = getIntent();
 	    
 	    int		score = intent.getIntExtra("score",10000);
+	    int		total = intent.getIntExtra("total", 0);
 	    //int	position	= intent.getIntExtra("position", 0);
 	    
 		setContentView(R.layout.activity_score);
@@ -28,7 +29,7 @@ implements ScoreFragment.OnScoreClosedListener{
 	
         ScoreFragment scoreFrag = (ScoreFragment)
                 getSupportFragmentManager().findFragmentById(R.id.score_fragment);
-    	scoreFrag.setScore(score);
+    	scoreFrag.setScore(score, total);
         
         // Show the Up button in the action bar.
 		//setupActionBar();

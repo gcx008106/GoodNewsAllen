@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Db{
-	public static 	List<Question> questions = new ArrayList<Question>();
+	// Per instance (was static, which re-added the questions every time MainActivity was created).
+	public 	List<Question> questions = new ArrayList<Question>();
 	public int 	currentQuestion=0;
 	
 	Db(){
@@ -39,6 +40,19 @@ public class Db{
 		}
 	}
 	
+	public int getQuestionCount(){
+		return questions.size();
+	}
+
+	/** 1-based number of the current question. */
+	public int getCurrentQuestionNumber(){
+		return currentQuestion + 1;
+	}
+
+	public boolean isLastQuestion(){
+		return currentQuestion >= questions.size() - 1;
+	}
+
 	public String getCurrentQuesitionStatement(){
 		Question q = (Question) questions.get(currentQuestion);
 		return q.statement;

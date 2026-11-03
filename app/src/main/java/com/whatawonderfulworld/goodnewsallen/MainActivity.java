@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
@@ -59,10 +60,27 @@ public class MainActivity extends FragmentActivity
         return disp;
     }
     
+    // Left/right arrow keys page through the image choices (handy on emulators / keyboards).
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int code = event.getKeyCode();
+        if (code == KeyEvent.KEYCODE_DPAD_LEFT || code == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                SelectionFragment sf = (SelectionFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.selection_fragment);
+                if (sf != null) {
+                    sf.moveSelection(code == KeyEvent.KEYCODE_DPAD_RIGHT ? 1 : -1);
+                }
+            }
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
     public void updateFragmentViews(){
        	QuestionFragment qf = (QuestionFragment)getSupportFragmentManager().findFragmentById(R.id.question_fragment);
     	String statement = db.getCurrentQuesitionStatement();
-       	qf.setQuestionStatement(statement);  
+       	qf.setQuestion(db.getCurrentQuestionNumber(), db.getQuestionCount(), statement);
     
       	SelectionFragment sf = (SelectionFragment)getSupportFragmentManager().findFragmentById(R.id.selection_fragment);
     	List<Integer> imageList = db.getCurrentSelectionImages();
@@ -77,6 +95,8 @@ public class MainActivity extends FragmentActivity
             
             Intent i = new Intent(this, ResultActivity.class);
             i.putExtra("resultDisp", disp);
+            i.putExtra("correct", result);
+            i.putExtra("isLast", db.isLastQuestion());
             resultLauncher.launch(i);
     }
     
@@ -87,6 +107,7 @@ public class MainActivity extends FragmentActivity
         }else{
             Intent i = new Intent(this, ScoreActivity.class);
             i.putExtra("score", score);
+            i.putExtra("total", db.getQuestionCount());
             scoreLauncher.launch(i);
         }
     }

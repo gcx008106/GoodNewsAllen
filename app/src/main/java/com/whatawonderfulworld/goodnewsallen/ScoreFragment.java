@@ -37,8 +37,10 @@ public class ScoreFragment extends Fragment {
         View v =  inflater.inflate(R.layout.score_view, container, false);
         
         mScoreView = (TextView) v.findViewById(R.id.score);
+        mDetailView = (TextView) v.findViewById(R.id.score_detail);
         if (mPendingScore != null) {
             mScoreView.setText(mPendingScore);
+            mDetailView.setText(mPendingDetail);
         }
 
         Button closeButton = (Button) v.findViewById(R.id.score_button);
@@ -84,12 +86,17 @@ public class ScoreFragment extends Fragment {
     
     
     private TextView mScoreView;
+    private TextView mDetailView;
     private String mPendingScore;
+    private String mPendingDetail;
 
-    public void setScore(int score) {
-        mPendingScore = Integer.toString(score*100)+"て～ん！";
+    /** @param score number of correct answers, @param total number of questions */
+    public void setScore(int score, int total) {
+        mPendingScore = getString(R.string.score_points, score * 100);
+        mPendingDetail = getString(R.string.score_detail, total, score);
         if (mScoreView != null) {
             mScoreView.setText(mPendingScore);
+            mDetailView.setText(mPendingDetail);
         }
     }
 
