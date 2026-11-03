@@ -35,3 +35,7 @@ dependencies {
     implementation libs.androidx.fragment
     implementation libs.androidx.viewpager
 }
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['-Xlint:deprecation']
+}

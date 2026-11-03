@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -13,8 +15,21 @@ public class MainActivity extends FragmentActivity
         implements SelectionFragment.OnAnswerSelectedListener{
 
 	
-    final static int SHOW_RESULT_REQUEST = 99;
-    final static int SHOW_SCORE_REQUEST = 100;
+    // Result screen: "Next" returns RESULT_NEXT -> show the next question or the score.
+    private final ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_NEXT) {
+                    onResultClosed();
+                }
+            });
+
+    // Score screen: 「おしまい」 (or back) ends the quiz.
+    private final ActivityResultLauncher<Intent> scoreLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> finish());
+
+    final static int RESULT_NEXT = 1;
     public Db db = new Db();
     public int score = 0;
     
@@ -62,24 +77,17 @@ public class MainActivity extends FragmentActivity
             
             Intent i = new Intent(this, ResultActivity.class);
             i.putExtra("resultDisp", disp);
-            startActivityForResult(i, SHOW_RESULT_REQUEST);
+            resultLauncher.launch(i);
     }
     
     
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
- 
-        if (resultCode == 1 && requestCode == SHOW_RESULT_REQUEST) {
-        	if( db.goToNextQuesion() ){
-        		updateFragmentViews();
-        	}else{
-                Intent i = new Intent(this, ScoreActivity.class);
-                i.putExtra("score", score);
-                startActivityForResult(i, SHOW_SCORE_REQUEST);
-        	}
-        } else if (requestCode == SHOW_SCORE_REQUEST) {
-            // 「おしまい」 on the score screen ends the quiz.
-            finish();
+    private void onResultClosed() {
+        if( db.goToNextQuesion() ){
+            updateFragmentViews();
+        }else{
+            Intent i = new Intent(this, ScoreActivity.class);
+            i.putExtra("score", score);
+            scoreLauncher.launch(i);
         }
     }
     

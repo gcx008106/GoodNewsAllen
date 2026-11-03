@@ -3,7 +3,6 @@ package com.whatawonderfulworld.goodnewsallen;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -54,12 +53,12 @@ public class SelectionFragment2 extends Fragment {
     
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mCallback = (OnAnswerSelectedListener) activity;
+            mCallback = (OnAnswerSelectedListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnResultClosedListener");
         }
     }

@@ -6,9 +6,9 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Parcelable;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -27,12 +27,13 @@ public class ViewPagerAdapter extends PagerAdapter {
 	  return images.size();
 	 }
 
-	 public Object instantiateItem(View collection, int position) {
+	 @Override
+	 public Object instantiateItem(ViewGroup collection, int position) {
 	  ImageView view = new ImageView(activity);
 	  //view.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 	  //view.setScaleType(ScaleType.FIT_XY);
 	  view.setImageResource(images.get(position));
-	  ((ViewPager) collection).addView(view, 0);
+	  collection.addView(view, 0);
 	  view.setId(position);
 	  view.setOnClickListener(new OnClickListener(){
 	        public void onClick(View v){
@@ -47,8 +48,8 @@ public class ViewPagerAdapter extends PagerAdapter {
 	 }
 
 	 @Override
-	 public void destroyItem(View arg0, int arg1, Object arg2) {
-	  ((ViewPager) arg0).removeView((View) arg2);
+	 public void destroyItem(ViewGroup container, int position, Object object) {
+	  container.removeView((View) object);
 	 }
 
 	 @Override
